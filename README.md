@@ -22,8 +22,9 @@ property, so each device needs its own path:
 - **Raw Win32 HID through P/Invoke.** Device discovery with SetupAPI, then
   `CreateFile`, `HidD_SetFeature`/`HidD_GetFeature`, and overlapped
   `ReadFile`/`WriteFile` with event-based timeouts and `CancelIo`.
-- **Safe under concurrency.** Two reads launched at once made the exchange fail
-  3 times out of 3. A cross-process named mutex plus bounded retries fixed it.
+- **Safe under concurrency.** Two mouse reads launched at once (battery and
+  polling rate) made the exchange fail 3 times out of 3. A cross-process named
+  mutex plus bounded retries fixed it.
 - **Cheap.** No resident process: each call starts, reads and exits. Dropping a
   redundant status round trip cut a keyboard read from 365 ms to 216 ms.
 

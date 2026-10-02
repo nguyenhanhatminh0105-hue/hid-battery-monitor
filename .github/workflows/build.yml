@@ -1,0 +1,31 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile with the C# compiler bundled in Windows
+        shell: cmd
+        run: build.bat
+
+      # The runner has no wireless devices attached, so every reader must
+      # report -1 (unavailable) and exit cleanly rather than crash or hang.
+      - name: Smoke test without devices
+        shell: pwsh
+        run: |
+          foreach ($device in 'lofree', 'lamzu', 'tbair') {
+            $out = & .\BatteryRead.exe $device
+            if ($LASTEXITCODE -ne 0 -or $out -ne '-1') { throw "$device printed '$out' (exit $LASTEXITCODE)" }
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BatteryRead
+          path: BatteryRead.exe

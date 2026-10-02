@@ -1,5 +1,7 @@
 # HID Battery Monitor
 
+[![Build](https://github.com/nguyenhanhatminh0105-hue/hid-battery-monitor/actions/workflows/build.yml/badge.svg)](https://github.com/nguyenhanhatminh0105-hue/hid-battery-monitor/actions/workflows/build.yml)
+
 Reads the battery level of three 2.4 GHz wireless peripherals on Windows and
 prints it as a single number, so a desktop status bar (Rainmeter) can show it.
 
